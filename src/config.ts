@@ -1,3 +1,5 @@
+import * as process from "process";
+
 const config = {
     userName: process.env.userName || "None",
     password: process.env.password || "None",
