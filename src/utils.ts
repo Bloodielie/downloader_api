@@ -6,12 +6,16 @@ export function badQueryParams(res: Response, propertyName: string): void {
 }
 
 
-export async function responseLogic(res: Response, prom: Promise<any>): Promise<void> {
+export async function responseLogic(res: Response, prom: Promise<any>): Promise<object> {
     try {
         let result = await prom;
-        res.send({result: result, status_code: 200});
+        const response = {result: result, status_code: 200};
+        res.send(response);
+        return response
     } catch (err) {
         res.statusCode = 400;
-        res.send({result: err.message, status_code: 400});
+        const response = {result: err.message, status_code: 400};
+        res.send(response);
+        return response
     }
 }
