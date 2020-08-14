@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379"
+    networks:
+      backend:
+        ipv4_address: 11.0.11.2
+    volumes:
+      - ./redis-data:/data
+
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    networks:
+      - backend
+    restart: always
+    depends_on:
+      - redis
+
+networks:
+  backend:
+    ipam:
+      driver: default
+      config:
+        - subnet: 11.0.11.0/24
